@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@fontsource/fira-mono': ^4.5.10
   '@fontsource/inter': ^4.5.14
   '@fontsource/kdam-thmor-pro': ^4.5.2
   '@fortawesome/free-solid-svg-icons': ^6.2.1
@@ -31,13 +30,12 @@ specifiers:
   vitest: ^0.25.3
 
 dependencies:
-  '@fontsource/inter': 4.5.14
-  '@fontsource/kdam-thmor-pro': 4.5.2
   '@fortawesome/free-solid-svg-icons': 6.2.1
   svelte-fa: 3.0.3
 
 devDependencies:
-  '@fontsource/fira-mono': 4.5.10
+  '@fontsource/inter': 4.5.14
+  '@fontsource/kdam-thmor-pro': 4.5.2
   '@neoconfetti/svelte': 1.0.0
   '@playwright/test': 1.28.1
   '@sveltejs/adapter-auto': 1.0.0-next.90
@@ -99,17 +97,13 @@ packages:
       - supports-color
     dev: true
 
-  /@fontsource/fira-mono/4.5.10:
-    resolution: {integrity: sha512-bxUnRP8xptGRo8YXeY073DSpfK74XpSb0ZyRNpHV9WvLnJ7TwPOjZll8hTMin7zLC6iOp59pDZ8EQDj1gzgAQQ==}
-    dev: true
-
   /@fontsource/inter/4.5.14:
     resolution: {integrity: sha512-JDC9AocdPLuGsASkvWw9hS5gtHE7K9dOwL98XLrk5yjYqxy4uVnScG58NUvFMJDVJRl/7c8Wnap6PEs+7Zvj1Q==}
-    dev: false
+    dev: true
 
   /@fontsource/kdam-thmor-pro/4.5.2:
     resolution: {integrity: sha512-SdNHXfw6t8Ncww8g5cL15YVxpcWi2SNUGLW7pOqVWpmzY1f/Nt/99344gG2snepM/5jiDO2LxhJKv5kE5l+hYQ==}
-    dev: false
+    dev: true
 
   /@fortawesome/fontawesome-common-types/6.2.1:
     resolution: {integrity: sha512-Sz07mnQrTekFWLz5BMjOzHl/+NooTdW8F8kDQxjWwbpOJcnoSg4vUDng8d/WR1wOxM0O+CY9Zw0nR054riNYtQ==}

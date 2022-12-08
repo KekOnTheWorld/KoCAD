@@ -13,7 +13,8 @@
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
-		"@fontsource/fira-mono": "^4.5.10",
+		"@fontsource/inter": "^4.5.14",
+		"@fontsource/kdam-thmor-pro": "^4.5.2",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "next",
@@ -40,8 +41,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/inter": "^4.5.14",
-		"@fontsource/kdam-thmor-pro": "^4.5.2",
 		"@fortawesome/free-solid-svg-icons": "^6.2.1",
 		"svelte-fa": "^3.0.3"
 	}
