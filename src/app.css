@@ -1,24 +1,28 @@
 body {
-    background-color: black;
-    color: white;
-    font-family: "Inter", sans-serif;
+	background-color: black;
+	color: white;
+	font-family: 'Inter', sans-serif;
 }
 
-h1,h2,h3,h4 {
-    font-family: "Kdam Thmor Pro", sans-serif;
+h1,
+h2,
+h3,
+h4 {
+	font-family: 'Kdam Thmor Pro', sans-serif;
 }
 
-p, label {
-    color: #aaa;
+p,
+label {
+	color: #aaa;
 }
 
 a {
-    text-decoration: none;
-    color: coral;
+	text-decoration: none;
+	color: coral;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
