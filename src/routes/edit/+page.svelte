@@ -1,15 +1,19 @@
 <script lang="ts">
+    import { Sketch } from "$lib/sketch";
+
 	import { browser } from '$app/environment';
 
 	import { goto } from '$app/navigation';
 
+    let sketch: Sketch;
+
 	function loadSketch() {
-		const sketch = localStorage.getItem('sketch');
-		if (!sketch) goto('/new');
+		const sketchText = localStorage.getItem('sketch');
+		if (!sketchText) goto('/new');
 
-		const xmlDoc = new DOMParser().parseFromString(sketch as string, 'text/xml');
+        sketch = Sketch.fromText(sketchText);
 
-		console.log(xmlDoc);
+        console.log(sketch);
 	}
 
 	if (browser) loadSketch();
