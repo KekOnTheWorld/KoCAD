@@ -3,7 +3,7 @@
 </svelte:head>
 
 <main>
-	<h1>KekCAD</h1>
+	<h1>KoCAD</h1>
 	<p>The only CAD Program you will ever need!</p>
 	<div class="links">
 		<a href="new">New Sketch</a>
