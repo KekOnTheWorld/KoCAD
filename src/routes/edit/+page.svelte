@@ -1,19 +1,20 @@
 <script lang="ts">
-    import { Sketch } from "$lib/sketch";
+    import { Project } from "$lib/cad/project";
+	import { StackBuf } from "$lib/cad/stack";
 
 	import { browser } from '$app/environment';
 
 	import { goto } from '$app/navigation';
 
-    let sketch: Sketch;
+    let project: Project;
 
 	function loadSketch() {
-		const sketchText = localStorage.getItem('sketch');
-		if (!sketchText) goto('/new');
+		const projectText = localStorage.getItem('project');
+		if (!projectText) goto('/new');
 
-        sketch = Sketch.fromText(sketchText);
+        project = Project.load(StackBuf.fromString(projectText as string));
 
-        console.log(sketch);
+        console.log(project);
 	}
 
 	if (browser) loadSketch();
