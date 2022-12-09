@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto } from "$app/navigation";
 
 	let input: HTMLInputElement;
 
@@ -12,12 +12,12 @@
 			if (result) loadText(result.toString());
 		};
 
-		reader.readAsText(file, 'utf-8');
+		reader.readAsText(file, "utf-8");
 	}
 
 	function loadText(text: string) {
-		localStorage.setItem('sketch', text);
-		goto('edit');
+		localStorage.setItem("sketch", text);
+		goto("edit");
 	}
 </script>
 

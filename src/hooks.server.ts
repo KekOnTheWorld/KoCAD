@@ -1,5 +1,5 @@
-import type { Handle } from '@sveltejs/kit';
-import { minify } from 'html-minifier-terser';
+import type { Handle } from "@sveltejs/kit";
+import { minify } from "html-minifier-terser";
 
 const minification_options = {
 	collapseWhitespace: true,
