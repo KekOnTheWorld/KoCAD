@@ -10,4 +10,3 @@ by using Web3 Technologies to get a working clone (with more features) in the br
 ## License
 
 This project is licensed under the [MIT License](https://github.com/KekOnTheWorld/KoCAD/blob/main/LICENSE)
-
