@@ -1,5 +1,6 @@
+import { fromByteArray, toByteArray } from "base64-js";
 import { Sketch } from "./sketch";
-import type { Dumpable, StackBuf } from "./stack";
+import { StackBuf, type Dumpable } from "./stack";
 import { dumpVector, loadVector, type Vector } from "./vector";
 
 export class Node implements Dumpable {
@@ -29,26 +30,42 @@ export class Node implements Dumpable {
 	}
 }
 
-// 1mb
-export const PROJECT_BUF_SIZE = 1024 * 1024;
-
 export class Project implements Dumpable {
+    title: string;
 	sketches: Sketch[];
 	nodes: Node[];
 
-	constructor(sketches: Sketch[] = [], nodes: Node[] = []) {
-		this.sketches = sketches;
+	constructor(title: string = "Untitled", sketches: Sketch[] = [], nodes: Node[] = []) {
+		this.title = title;
+        this.sketches = sketches;
 		this.nodes = nodes;
 	}
 
-	dump(buf: StackBuf) {
+    dump(buf: StackBuf) {
 	    buf.pushDumpableArray(this.nodes);
         buf.pushDumpableArray(this.sketches);
+        buf.pushString(this.title);
     }
 
 	static load(buf: StackBuf): Project {
+        const title = buf.popString();
 		const sketches = buf.popArray(Sketch.load);
         const nodes = buf.popArray(buf => Node.load(buf, sketches));
-		return new Project(sketches, nodes);
+		return new Project(title, sketches, nodes);
 	}
+    
+    static toB64(project: Project): string { 
+		const buf = new StackBuf(PROJECT_BUF_SIZE);
+        project.dump(buf);
+        return fromByteArray(buf.slice());
+    }
+
+
+    static fromB64(b64: string): Project {
+        const buf = new StackBuf(0, toByteArray(b64));
+        return this.load(buf);
+    }
 }
+
+export const PROJECT_BUF_SIZE = 1024 * 1024; // 1MiB
+export const DEFAULT_PROJECT = new Project("Unknown");

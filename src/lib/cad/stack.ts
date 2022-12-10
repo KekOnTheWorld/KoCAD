@@ -12,9 +12,9 @@ export class StackBuf implements Stack<number> {
 	buf: Uint8Array;
 	len: number;
 
-	constructor(cap: number) {
-		this.buf = new Uint8Array(cap);
-		this.len = 0;
+	constructor(cap: number, buf?: Uint8Array) {
+		this.buf = buf || new Uint8Array(cap);
+		this.len = buf ? buf.length : 0;
 	}
 
 	reset() {
@@ -46,6 +46,15 @@ export class StackBuf implements Stack<number> {
         this.pushVarInt(array.length);
     }
 
+    pushBytes(bytes: Uint8Array) {
+        for(const byte of bytes.reverse()) this.push(byte);
+        this.pushVarInt(bytes.length);
+    }
+
+    pushString(str: string) {
+        this.pushBytes(new TextEncoder().encode(str));
+    }
+
 	//
 
 	pop(): number {
@@ -69,23 +78,26 @@ export class StackBuf implements Stack<number> {
         return result;
     }
 
+    popBytes(): Uint8Array {
+        const length = this.popVarInt();
+        const result = new Uint8Array(length);
+        for(let i = 0; i < length; i++) result[i] = this.pop();
+        return result;
+    }
+
+    popString(): string {
+        return new TextDecoder().decode(this.popBytes());
+    }
+
 	//
 
 	last(): number {
 		return this.buf[this.len - 1];
 	}
 
-	//
+    //
 
-	toString(): string {
-		return String.fromCharCode(...this.buf.slice(0, this.len));
-	}
-
-	static fromString(str: string): StackBuf {
-		const buf = new StackBuf(str.length);
-		for (let i = 0; i < str.length; i++) {
-			buf.push(str.charCodeAt(i));
-		}
-		return buf;
-	}
+    slice(): Uint8Array {
+        return this.buf.slice(0, this.len);
+    }
 }

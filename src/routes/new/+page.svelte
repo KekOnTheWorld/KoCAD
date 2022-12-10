@@ -3,15 +3,12 @@
 
 	import { goto } from "$app/navigation";
 
-	import { Project, PROJECT_BUF_SIZE } from "$lib/cad/project";
-	import { StackBuf } from "$lib/cad/stack";
+	import { Project } from "$lib/cad/project";
 
 	if (browser) {
-		const project = new Project();
-		const buf = new StackBuf(PROJECT_BUF_SIZE);
-		project.dump(buf);
+        const project = new Project();
 
-		localStorage.setItem("project", buf.toString());
+        localStorage.setItem("project", Project.toB64(project));
 
 		goto("edit");
 	}
