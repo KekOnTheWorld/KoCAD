@@ -4,6 +4,10 @@ export interface Stack<T> {
 	last(): T;
 }
 
+export interface Dumpable {
+    dump(buf: StackBuf): void;
+}
+
 export class StackBuf implements Stack<number> {
 	buf: Uint8Array;
 	len: number;
@@ -32,6 +36,16 @@ export class StackBuf implements Stack<number> {
 		bytes.reverse().forEach((n) => this.push(n));
 	}
 
+    pushArray<T>(array: T[], dumper: (entry: T, buf: StackBuf) => void) {
+        for(const entry of array) dumper(entry, this);
+        this.pushVarInt(array.length);
+    }
+
+    pushDumpableArray(array: Dumpable[]) {
+        for(const entry of array) entry.dump(this);
+        this.pushVarInt(array.length);
+    }
+
 	//
 
 	pop(): number {
@@ -47,6 +61,13 @@ export class StackBuf implements Stack<number> {
 		}
 		return result;
 	}
+
+    popArray<T>(loader: (buf: StackBuf) => T): T[] {
+        const length = this.popVarInt();
+        const result: T[] = [];
+        for(let i = 0; i < length; i++) result.push(loader(this));
+        return result;
+    }
 
 	//
 
