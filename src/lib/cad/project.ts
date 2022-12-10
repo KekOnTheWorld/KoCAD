@@ -1,8 +1,8 @@
 import { Sketch } from "./sketch";
-import type { StackBuf } from "./stack";
+import type { Dumpable, StackBuf } from "./stack";
 import { dumpVector, loadVector, type Vector } from "./vector";
 
-export class Node {
+export class Node implements Dumpable {
 	position: Vector;
 	rotation: Vector;
 	sketch: Sketch;
@@ -14,9 +14,9 @@ export class Node {
 	}
 
 	dump(buf: StackBuf) {
-		dumpVector(this.position, buf);
+        buf.pushVarInt(this.sketch.id);
 		dumpVector(this.rotation, buf);
-		buf.pushVarInt(this.sketch.id);
+		dumpVector(this.position, buf);
 	}
 
 	static load(buf: StackBuf, sketches: Sketch[]): Node {
@@ -32,7 +32,7 @@ export class Node {
 // 1mb
 export const PROJECT_BUF_SIZE = 1024 * 1024;
 
-export class Project {
+export class Project implements Dumpable {
 	sketches: Sketch[];
 	nodes: Node[];
 
@@ -42,23 +42,13 @@ export class Project {
 	}
 
 	dump(buf: StackBuf) {
-		buf.pushVarInt(this.sketches.length);
-		this.sketches.forEach((s) => s.dump(buf));
-		buf.pushVarInt(this.nodes.length);
-		this.nodes.forEach((n) => n.dump(buf));
-	}
+	    buf.pushDumpableArray(this.nodes);
+        buf.pushDumpableArray(this.sketches);
+    }
 
 	static load(buf: StackBuf): Project {
-		const sketchesLength = buf.popVarInt();
-		const sketches = [];
-		for (let i = 0; i < sketchesLength; i++) {
-			sketches.push(Sketch.load(buf));
-		}
-		const nodesLength = buf.popVarInt();
-		const nodes = [];
-		for (let i = 0; i < nodesLength; i++) {
-			nodes.push(Node.load(buf, sketches));
-		}
+		const sketches = buf.popArray(Sketch.load);
+        const nodes = buf.popArray(buf => Node.load(buf, sketches));
 		return new Project(sketches, nodes);
 	}
 }
